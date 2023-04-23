@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index3_extended.css">
+    <title>An instruction page using API</title>
+</head>
+
+<body onload="getData()">
+    <div id="container">
+        <div id="head">
+            <h2>Read The Instructions Carefully</h2>
+        </div>
+        <div id="resultcontainer">
+            <div id="result"></div>
+        </div>
+        <div id="buttons">
+            <div id="preButton">
+                <button id="pre" onclick="getPrevious()">Previous</button>
+            </div>
+            <div id="nextbutton">
+                <button id="next" onclick="getNext()">Next</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        var myarray = [];
+        var start = 0;
+        var end = 10;
+        var curpage=1;
+        function getData() {
+            checkButtons();
+            $.ajax({
+                url: "https://jsonplaceholder.typicode.com/posts",
+                method: "get",
+                data: {},
+                success: function (response) {
+                    myarray = response;
+                    display(start, end);
+                    // getFlag();
+                }
+            })
+        }
+        function display(start, end) {
+            temp = "<ol>";
+            for (let i = start; i < end; i++) {
+                temp += "<li>" + myarray[i].title + "</li>";
+            }
+            temp += "</ol>";
+            document.getElementById('result').innerHTML = temp;
+
+        }
+        function getPrevious() {
+            curpage--;
+            end = start;
+            start = end - 10;
+            checkButtons();
+            display(start, end);
+        }
+        function getNext() {
+            curpage++;
+            start = end;
+            end = start + 10;
+            checkButtons();
+            display(start, end);
+            // getFlag();
+            // document.getElementById("pre").style.display = "block";
+        }
+        function checkButtons() {
+            document.getElementById("pre").style.display = "inline-block";
+            document.getElementById("next").style.display = "inline-block";
+            if (curpage===1) {
+                document.getElementById("pre").style.display = "none";
+            }
+        if(curpage===10){
+
+                document.getElementById("next").style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

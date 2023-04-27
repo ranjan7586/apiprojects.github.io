@@ -14,6 +14,9 @@
         <div id="head">
             <h2>Read The Instructions Carefully</h2>
         </div>
+        <div id="filter">
+            <input onkeyup="getSearch()" type="text" id="searchid" placeholder="Enter keyword to search">
+        </div>
         <div id="resultcontainer">
             <div id="result"></div>
         </div>
@@ -47,7 +50,7 @@
             })
         }
         function display(start, end) {
-            temp = "<ol>";
+            var temp = "<ol id='templist'>";
             for (let i = start; i < end; i++) {
                 temp += "<li>" + myarray[i].title + "</li>";
             }
@@ -80,6 +83,24 @@
         if(curpage===10){
 
                 document.getElementById("next").style.display = "none";
+            }
+        }
+        function getSearch(){
+            var search=document.getElementById('searchid').value;
+            var listsearch=document.getElementById('templist');
+            var listitem=listsearch.getElementsByTagName('li');
+            // alert(listitem.length);
+            for (let i = 0; i < listitem.length; i++) {
+                var listtext=listitem[i].innerHTML;
+                // alert(listtext)     
+                var sub_string=listtext.substring(0,search.length);
+                if (sub_string==search) {
+                    listitem[i].style.display="";
+                    
+                }
+                else{
+                    listitem[i].style.display="none";
+                }
             }
         }
     </script>

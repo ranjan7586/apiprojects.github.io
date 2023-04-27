@@ -87,6 +87,8 @@
         }
         function getSearch(){
             var search=document.getElementById('searchid').value;
+            var searchtext=search.toLowerCase();
+            // alert(searchtext);
             var listsearch=document.getElementById('templist');
             var listitem=listsearch.getElementsByTagName('li');
             // alert(listitem.length);
@@ -94,7 +96,7 @@
                 var listtext=listitem[i].innerHTML;
                 // alert(listtext)     
                 var sub_string=listtext.substring(0,search.length);
-                if (sub_string==search) {
+                if (sub_string==searchtext) {
                     listitem[i].style.display="";
                     
                 }
